@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateShiftTable extends Migration
+class CreatePlottingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateShiftTable extends Migration
      */
     public function up()
     {
-        Schema::create('shift', function (Blueprint $table) {
+        Schema::create('plottings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('namashift');
-            $table->date('hari');
-            $table->time('jam_mulai');
-            $table->time('jam_berakhir');
-            $table->integer('kuota');
             $table->timestamps();
+            $table->unsignedBigInteger('caas_id');
+            $table->foreign('caas_id')->references('id')->on('datacaas')->onDelete('cascade');
+            $table->unsignedBigInteger('shift_id');
+            $table->foreign('shift_id')->references('id')->on('shift')->onDelete('cascade');
         });
     }
 
@@ -31,6 +30,6 @@ class CreateShiftTable extends Migration
      */
     public function down()
     {
-        Schema::drop('shift');
+        Schema::dropIfExists('plottings');
     }
 }

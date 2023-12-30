@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlotsTable extends Migration
+class CreateStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreatePlotsTable extends Migration
      */
     public function up()
     {
-        Schema::create('plots', function (Blueprint $table) {
+        Schema::create('statuses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
             $table->timestamps();
             $table->unsignedBigInteger('caas_id');
             $table->foreign('caas_id')->references('id')->on('datacaas')->onDelete('cascade');
@@ -30,6 +31,6 @@ class CreatePlotsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('plots');
+        Schema::dropIfExists('statuses');
     }
 }

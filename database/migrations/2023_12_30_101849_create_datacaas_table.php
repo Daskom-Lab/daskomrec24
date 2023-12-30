@@ -3,9 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Validation\Rules\Unique;
 
-class CreateDataCaasTable extends Migration
+class CreateDatacaasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -18,7 +17,7 @@ class CreateDataCaasTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('nim')->Unique();
-            $table->string('emai')->unique();
+            $table->string('email')->unique();
             $table->string('class'); //bakal masukin role caas (sesuai yang sudah dibuat)
             $table->string('password');
             $table->rememberToken();
@@ -33,6 +32,6 @@ class CreateDataCaasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('datacaas');
+        Schema::dropIfExists('datacaas');
     }
 }
