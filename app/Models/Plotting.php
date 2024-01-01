@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Plotting extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'caas_id', 'shift_id'
+    ];
 }

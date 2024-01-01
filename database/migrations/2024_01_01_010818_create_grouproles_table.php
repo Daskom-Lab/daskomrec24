@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlottingsTable extends Migration
+class CreateGrouprolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreatePlottingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('plottings', function (Blueprint $table) {
+        Schema::create('grouproles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->boolean('isPlotActive');
             $table->unsignedBigInteger('caas_id');
             $table->foreign('caas_id')->references('id')->on('datacaas')->onDelete('cascade');
-            $table->unsignedBigInteger('shift_id');
-            $table->foreign('shift_id')->references('id')->on('shift')->onDelete('cascade');
+            $table->unsignedBigInteger('roles_id');
+            $table->foreign('roles_id')->references('id')->on('roles')->onDelete('cascade');
         });
     }
 
@@ -31,6 +30,6 @@ class CreatePlottingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plottings');
+        Schema::dropIfExists('grouproles');
     }
 }
