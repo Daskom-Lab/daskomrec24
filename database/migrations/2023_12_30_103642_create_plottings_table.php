@@ -20,7 +20,7 @@ class CreatePlottingsTable extends Migration
             $table->unsignedBigInteger('caas_id');
             $table->foreign('caas_id')->references('id')->on('datacaas')->onDelete('cascade');
             $table->unsignedBigInteger('shift_id');
-            $table->foreign('shift_id')->references('id')->on('shift')->onDelete('cascade');
+            $table->foreign('shift_id')->references('id')->on('shifts')->onDelete('cascade');
         });
     }
 
