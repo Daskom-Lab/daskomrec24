@@ -8,7 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Plotting extends Model
 {
     use HasFactory;
+    protected $table = 'plottings';
+    
+
     protected $fillable = [
-        'caas_id', 'shift_id'
+        'isPlotActive',
+        'caas_id', 
+        'shift_id',
+        'created_at',
+        'updated_at',
     ];
+
+    public function datacaas()
+    {
+        return $this->belongsTo(Datacaas::class, 'caas_id');
+    }
+
+    public function shifts()
+    {
+        return $this->belongsTo(Shift::class, 'shift_id');
+    }
 }

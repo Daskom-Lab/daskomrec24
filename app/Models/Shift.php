@@ -13,6 +13,8 @@ class Shift extends Model
         'day',
         'start_hour',
         'end_hour',
-        'quota'
+        'quota',
+        'created_at',
+        'updated_at',
     ];
 }

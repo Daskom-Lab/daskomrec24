@@ -15,12 +15,12 @@ class CreatePlottingsTable extends Migration
     {
         Schema::create('plottings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
             $table->boolean('isPlotActive');
             $table->unsignedBigInteger('caas_id');
             $table->foreign('caas_id')->references('id')->on('datacaas')->onDelete('cascade');
             $table->unsignedBigInteger('shift_id');
             $table->foreign('shift_id')->references('id')->on('shifts')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

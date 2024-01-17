@@ -19,7 +19,7 @@ class CreateShiftsTable extends Migration
             $table->date('day');
             $table->time('start_hour');
             $table->time('end_hour');
-            $table->integer('quouta');
+            $table->integer('quota');
             $table->timestamps();
         });
     }

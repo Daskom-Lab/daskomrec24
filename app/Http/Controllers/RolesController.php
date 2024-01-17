@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Roles;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreRolesRequest;
 use App\Http\Requests\UpdateRolesRequest;
 
@@ -15,62 +16,31 @@ class RolesController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Roles::all();
+        $data = [
+            'title' => 'Role List',
+            'roles' => $roles
+        ];
+        return view('admin.roleList', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function update(Request $request, $id)
     {
-        //
-    }
+        $validate = $request->validate([
+            'roleName' => 'required',
+            'desc' => 'required',
+            'character_photo' => 'required',
+            'profilepic'=> 'required'
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreRolesRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreRolesRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Roles  $roles
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Roles $roles)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Roles  $roles
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Roles $roles)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateRolesRequest  $request
-     * @param  \App\Models\Roles  $roles
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateRolesRequest $request, Roles $roles)
-    {
-        //
+        Roles::where('id', $id)->update([
+            'roleName' => $request->roleName,
+            'desc' => $request->desc,
+            'character_photo' => $request->character_photo,
+            'profilepic' => $request->profilepic,
+            'updated_at' => now()
+        ]);
+        return redirect()->route('admin.role')->with('success', 'Role Updated');
     }
 
     /**
