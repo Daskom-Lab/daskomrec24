@@ -9,11 +9,6 @@ use App\Http\Requests\UpdateRolesRequest;
 
 class RolesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $roles = Roles::all();
@@ -32,7 +27,6 @@ class RolesController extends Controller
             'character_photo' => 'required',
             'profilepic'=> 'required'
         ]);
-
         Roles::where('id', $id)->update([
             'roleName' => $request->roleName,
             'desc' => $request->desc,
@@ -41,16 +35,5 @@ class RolesController extends Controller
             'updated_at' => now()
         ]);
         return redirect()->route('admin.role')->with('success', 'Role Updated');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Roles  $roles
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Roles $roles)
-    {
-        //
     }
 }
