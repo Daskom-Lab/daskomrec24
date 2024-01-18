@@ -9,11 +9,6 @@ use App\Http\Requests\UpdateShiftRequest;
 
 class ShiftController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $shifts = Shift::all()->sortBy('start_hour')->sortBy('day');
@@ -23,12 +18,7 @@ class ShiftController extends Controller
         ];
         return view('admin.shiftList', $data);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create(Request $request)
     {
         $validate = $request->validate([
@@ -38,7 +28,6 @@ class ShiftController extends Controller
             'end_hour' => 'required',
             'quota' => 'required',
         ]);
-
         Shift::create([
             'shift_name' => $request->shift_name,
             'day' => $request->day,
@@ -59,9 +48,7 @@ class ShiftController extends Controller
             'start_hour' => 'required',
             'end_hour' => 'required',
             'quota' => 'required',
-
         ]);
-
         Shift::where('id', $id)->update([
             'shift_name' => $request->shift_name,
             'day' => $request->day,
