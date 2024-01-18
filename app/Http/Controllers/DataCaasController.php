@@ -15,11 +15,6 @@ use Maatwebsite\Excel\Facades\Excel;
 //punya admin 
 class DataCaasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $caas = Datacaas::all();
@@ -28,8 +23,6 @@ class DataCaasController extends Controller
         $total = Status::total();
         $pass = Status::ispass();
         $failed = Status::isfailed();
-        // dd($caas);
-        // dd(Auth::guard('admin')->user()->stages()->id);
         $data = [
             'title' => 'Data Caas',
             'caas' => $caas,
@@ -42,14 +35,8 @@ class DataCaasController extends Controller
         return view('admin.caasList', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Request $request)
     {
-        // dd($request->all());
         $validate = $request->validate([
             'name' => 'required',
             'nim' => 'required|max:16|unique:datacaas,nim',
@@ -61,8 +48,6 @@ class DataCaasController extends Controller
             'stages_id' => 'required',
             'isPass' => 'required',
         ]); 
-        // dd($validate);
-
         $caas = Datacaas::insertGetId([
             'name' => $request->name,
             'email' => $request->email,
@@ -73,7 +58,6 @@ class DataCaasController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        // dd($caas);
         Status::create([
             'caas_id' => $caas,
             'stages_id' => $request->stages_id,
@@ -87,41 +71,22 @@ class DataCaasController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
         return redirect()->route('admin.datacaas')->with('success', 'Data Caas Added');
     }
     
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function storeImport(Request $request)
     {
         $file = $request->file('data');
         Excel::import(new CaasImport, $file);
-
         return back()->with('success', 'Data Imported successfully. gak bahaya tah');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
     public function setCaas(Request $request)
     {
         $validate = $request->validate([
             'nim' => 'required',
             'password' => 'required',
         ]);
-
         $set = Datacaas::where('nim', $request->nim)->first();
-        // dd($set);
         if($set == null){
             return redirect()->route('admin.datacaas')->with('error', 'NIM Tidak Terdaftar');
         }else{
@@ -131,17 +96,9 @@ class DataCaasController extends Controller
             return redirect()->route('admin.datacaas')->with('success', 'Password '. $request->nim. ' Updated');
         }
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, $id)
     {
-        // dd($request->all(),$id);
         $validate = $request->validate([
             'name' => 'required',
             'nim' => 'required|max:16|unique:datacaas,nim,'.$id.',id',
@@ -152,8 +109,6 @@ class DataCaasController extends Controller
             'stages_id' => 'required',
             'isPass' => 'required',
         ]); 
-        // dd($validate);
-
         $tes = Datacaas::where('id', '=',$id)->update([
             'name' => $request->name,
             'nim' => $request->nim,
@@ -162,7 +117,6 @@ class DataCaasController extends Controller
             'class' => $request->class,
             'updated_at' => now(),
         ]);
-        // dd($tes);
         Status::where('caas_id', '=', $id)->update([
             'stages_id' => $request->stages_id,
             'isPass' => $request->isPass,
@@ -172,19 +126,11 @@ class DataCaasController extends Controller
             'roles_id' => $request->roles_id,
             'updated_at' => now(),
         ]);
-
         return redirect()->route('admin.datacaas')->with('success', 'Data Caas Updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {   
-        // dd($id);
         $caas = Datacaas::find($id);
         $caas->delete();
         return redirect()->route('admin.datacaas')->with('success', 'Data Caas Deleted');
