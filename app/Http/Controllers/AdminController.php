@@ -12,16 +12,10 @@ use App\Models\Shift;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $message = Message::first();
         $stages = Stage::all();
-        // dd(Auth::guard('admin')->user()->stages()->id);
         $data = [
             'title' => 'Admin Dashboard',
             'message' => $message,
@@ -30,20 +24,11 @@ class AdminController extends Controller
         return view('admin.dashboard', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function setStatus(Request $request)
     {
-        $isMessageActive = $request->isMessageActive == NULL ? 0 : 1;
-        $isPlotActive = $request->isPlotActive == NULL ? 0 : 1;
-        // if($isMessageActive == 1 && $isPlotActive == 1){
-        //     $isMessageActive = 1;
-        //     $isPlotActive = 0;
-        // }
-        // dd($request->id);
+        $isMessageActive = boolval($request->isMessageActive);
+        $isPlotActive = boolval($request->isPlotActive);
+        
         Stage::where('isActive', 1)->update([
             'isActive' => 0
         ]);
