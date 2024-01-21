@@ -28,7 +28,8 @@ class AdminController extends Controller
     {
         $isMessageActive = boolval($request->isMessageActive);
         $isPlotActive = boolval($request->isPlotActive);
-        
+        $isRoleActive = boolval($request->isRoleActive);
+
         Stage::where('isActive', 1)->update([
             'isActive' => 0
         ]);
@@ -38,6 +39,7 @@ class AdminController extends Controller
         Announcecheck::where('id', 1)->update([
             'isMessageActive' => $isMessageActive,
             'isPlotActive' => $isPlotActive,
+            'isRoleActive' => $isRoleActive,
         ]);
         Status::where('isPass', 1)->update([
             'stages_id' => $request->id
@@ -76,6 +78,4 @@ class AdminController extends Controller
         Plotting::truncate();
         return redirect()->route('admin.plots')->with('status', 'Plots data reset successfully!');
     }
-
-    
 }

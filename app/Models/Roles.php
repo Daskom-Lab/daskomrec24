@@ -14,6 +14,7 @@ class Roles extends Model
         'desc',
         'character_photo',
         'profilepic',
+        'quota',
         'created_at',
         'updated_at',
     ];

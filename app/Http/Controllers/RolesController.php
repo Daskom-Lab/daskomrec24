@@ -25,13 +25,15 @@ class RolesController extends Controller
             'roleName' => 'required',
             'desc' => 'required',
             'character_photo' => 'required',
-            'profilepic'=> 'required'
+            'profilepic' => 'required',
+            'quota' => 'required'
         ]);
         Roles::where('id', $id)->update([
             'roleName' => $request->roleName,
             'desc' => $request->desc,
             'character_photo' => $request->character_photo,
             'profilepic' => $request->profilepic,
+            'quota' => $request->quota,
             'updated_at' => now()
         ]);
         return redirect()->route('admin.role')->with('success', 'Role Updated');

@@ -19,6 +19,7 @@ class CreateRolesTable extends Migration
             $table->text('desc');
             $table->string('character_photo');
             $table->string('profilepic');
+            $table->integer('quota');
             $table->timestamps();
         });
     }
