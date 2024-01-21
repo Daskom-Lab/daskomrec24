@@ -15,12 +15,12 @@ class CreateStatusesTable extends Migration
     {
         Schema::create('statuses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->boolean('nextstage');
-            $table->timestamps();
+            $table->boolean('isPass');
             $table->unsignedBigInteger('caas_id');
             $table->foreign('caas_id')->references('id')->on('datacaas')->onDelete('cascade');
             $table->unsignedBigInteger('stages_id');
             $table->foreign('stages_id')->references('id')->on('stages')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

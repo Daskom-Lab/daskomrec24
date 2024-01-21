@@ -2,85 +2,80 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
-use App\Http\Requests\StoreAdminRequest;
-use App\Http\Requests\UpdateAdminRequest;
+use App\Models\Stage;
+use App\Models\Status;
+use App\Models\Message;
+use Illuminate\Http\Request;
+use App\Models\Announcecheck;
+use App\Models\Plotting;
+use App\Models\Shift;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $message = Message::first();
+        $stages = Stage::all();
+        $data = [
+            'title' => 'Admin Dashboard',
+            'message' => $message,
+            'stages' => $stages,
+        ];
+        return view('admin.dashboard', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function setStatus(Request $request)
     {
-        //
+        $isMessageActive = boolval($request->isMessageActive);
+        $isPlotActive = boolval($request->isPlotActive);
+        
+        Stage::where('isActive', 1)->update([
+            'isActive' => 0
+        ]);
+        Stage::where('id', $request->id)->update([
+            'isActive' => 1
+        ]);
+        Announcecheck::where('id', 1)->update([
+            'isMessageActive' => $isMessageActive,
+            'isPlotActive' => $isPlotActive,
+        ]);
+        Status::where('isPass', 1)->update([
+            'stages_id' => $request->id
+        ]);
+        return redirect()->route('admin.dashboard')->with('status', 'Status updated successfully!');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreAdminRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreAdminRequest $request)
+
+    public function setMsg(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'pass_msg' => 'required',
+            'failed_msg' => 'required',
+            'link' => 'required',
+        ]);
+
+        Message::where('id', 1)->update([
+            'pass_msg' => $request->pass_msg,
+            'failed_msg' => $request->failed_msg,
+            'link' => $request->link,
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->route('admin.dashboard')->with('status', 'Announcement updated successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Admin $admin)
+    public function resetShift()
     {
-        //
+        $shift = Shift::whereNotNull('id')->delete();
+        $plot = Plotting::whereNotNull('id')->delete();
+        return redirect()->route('admin.shifts')->with('status', 'Shift data reset successfully!');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Admin $admin)
+    public function resetPlot()
     {
-        //
+        Plotting::truncate();
+        return redirect()->route('admin.plots')->with('status', 'Plots data reset successfully!');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateAdminRequest  $request
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateAdminRequest $request, Admin $admin)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Admin $admin)
-    {
-        //
-    }
+    
 }

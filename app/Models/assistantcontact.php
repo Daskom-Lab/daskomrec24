@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class assistantcontact extends Model
+class Assistantcontact extends Model
 {
     use HasFactory;
     protected $table = 'assistantcontact';

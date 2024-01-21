@@ -12,5 +12,7 @@ class Message extends Model
         'pass_msg',
         'failed_msg',
         'link',
+        'created_at',
+        'updated_at',
     ];
 }

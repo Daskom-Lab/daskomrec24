@@ -14,5 +14,7 @@ class Roles extends Model
         'desc',
         'character_photo',
         'profilepic',
+        'created_at',
+        'updated_at',
     ];
 }
