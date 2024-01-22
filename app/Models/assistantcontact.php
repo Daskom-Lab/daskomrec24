@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Assistantcontact extends Model
 {
     use HasFactory;
-    protected $table = 'assistantcontact';
+    protected $table = 'assistantcontacts';
     protected $fillable = [
         'name',
         'photo',
