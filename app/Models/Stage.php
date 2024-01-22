@@ -9,6 +9,12 @@ class Stage extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'stagesName'
+        'stagesName',
+        'isActive',
+        'created_at',
+        'updated_at'
     ];
+
+
+    
 }

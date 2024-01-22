@@ -46,6 +46,14 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+        'caas' => [
+            'driver' => 'session',
+            'provider' => 'caases',
+        ],
     ],
 
     /*
@@ -70,7 +78,14 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ], 
+        'caases' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Datacaas::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

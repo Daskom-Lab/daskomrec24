@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Grouprole;
-use App\Http\Requests\StoreGrouproleRequest;
-use App\Http\Requests\UpdateGrouproleRequest;
+use Illuminate\Http\Request;
 
-class GrouproleController extends Controller
+class CaasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +13,7 @@ class GrouproleController extends Controller
      */
     public function index()
     {
-        //
+        return dd('ok');
     }
 
     /**
@@ -31,10 +29,10 @@ class GrouproleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreGrouproleRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreGrouproleRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -42,10 +40,10 @@ class GrouproleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Grouprole  $grouprole
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Grouprole $grouprole)
+    public function show($id)
     {
         //
     }
@@ -53,10 +51,10 @@ class GrouproleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Grouprole  $grouprole
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Grouprole $grouprole)
+    public function edit($id)
     {
         //
     }
@@ -64,11 +62,11 @@ class GrouproleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateGrouproleRequest  $request
-     * @param  \App\Models\Grouprole  $grouprole
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateGrouproleRequest $request, Grouprole $grouprole)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -76,10 +74,10 @@ class GrouproleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Grouprole  $grouprole
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Grouprole $grouprole)
+    public function destroy($id)
     {
         //
     }
