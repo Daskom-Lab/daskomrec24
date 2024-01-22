@@ -33,13 +33,13 @@ class CaasLoginController extends Controller
     }
 
 
-    public function changePass(Request $request)
+    public function changePass(Request $request,$id)
     {
         $this->validate($request, [
             'password'  => 'required|min:8|string',
             'confirmPassword'  => 'required|same:password',
         ]);
-        DataCaas::where('id', Auth::id())->update([
+        DataCaas::where('id', $id)->update([
             'password' => Hash::make($request->password),
         ]);
         Auth::guard('caas')->logout();

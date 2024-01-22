@@ -20,7 +20,7 @@ class CreateAssistantcontactsTable extends Migration
             $table->string('ascode');
             $table->string('instagram');
             $table->string('idline');
-            $table->bigInteger('nohp');
+            $table->string('nohp');
             $table->timestamps();
         });
     }

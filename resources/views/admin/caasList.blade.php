@@ -487,43 +487,43 @@
 
 
 <!-- set pass Modal -->
- <div class="modal fade setCaas-detailModal" tabindex="-1" role="dialog" aria-labelledby="setCaas-detailModal"
-     aria-hidden="true">
-     <div class="modal-dialog modal-dialog-centered" role="document">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="setCaas-detailModal">Set CaAs</h5>
-                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-             </div>
-             <div class="modal-body">
-                 <form action="{{ route('admin.set.caas') }}" method="POST">
-                     @csrf
-                     <div class="mb-3">
-                        <label class="form-label">NIM</label>
-                        <div class="input-group auth-pass-inputgroup">
-                            <input type="text" name="nim" class="form-control" placeholder="Enter NIM" aria-label="NIM">
-                        </div>
+<div class="modal fade setCaas-detailModal" tabindex="-1" role="dialog" aria-labelledby="setCaas-detailModal"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="setCaas-detailModal">Set CaAs</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('admin.set.caas') }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                    <label class="form-label">NIM</label>
+                    <div class="input-group auth-pass-inputgroup">
+                        <input type="text" name="nim" class="form-control" placeholder="Enter NIM" aria-label="NIM">
                     </div>
-                     <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        <div class="input-group auth-pass-inputgroup">
-                            <input type="password" name="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
-                            <button class="btn btn-light " type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
-                        </div>
+                </div>
+                    <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <div class="input-group auth-pass-inputgroup">
+                        <input type="password" name="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
+                        <button class="btn btn-light " type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
                     </div>
-                 </div>
-                 <div class="modal-footer">
-                 <div class="row float-end">
-                     <div class="">
-                         <button type="submit" class="btn btn-secondary">Save</button>
-                     </div>
-                 </div>
-                 </div>
-             </form>
-         </div>
-     </div>
- </div>
- <!-- end modal -->
+                </div>
+                </div>
+                <div class="modal-footer">
+                <div class="row float-end">
+                    <div class="">
+                        <button type="submit" class="btn btn-secondary">Save</button>
+                    </div>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- end modal -->
 
 <!-- import excel Modal -->
  <div class="modal fade importCaas-detailModal" tabindex="-1" role="dialog" aria-labelledby="importCaas-detailModal"
