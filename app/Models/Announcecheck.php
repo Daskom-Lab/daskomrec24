@@ -19,6 +19,7 @@ class Announcecheck extends Model
     protected $fillable = [
         'isMessageActive',
         'isPlotActive',
+        'isRoleActive',
         'link',
         'created_at',
         'updated_at'

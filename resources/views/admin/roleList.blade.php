@@ -18,43 +18,19 @@
         </div>
     </div>
     <!-- end page title -->
-    {{-- <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6 align-self-start">
-                            <div class="text-lg-start mt-4 mt-lg-0">
-                                
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-6 align-self-end">
-                            <div class="text-lg-end mt-4 mt-lg-0">
-                                <a href="" class="btn btn-outline-success btn-block mx-2">Tambah Role</a>
-                            </div>
-                        </div>
-    
-                    </div>
-                    <!-- end row -->
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive ">
                         <table id="datatable" class="table table-striped table-bordered dt-responsive  nowrap w-100" >
-    
                             <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Avatar</th>
                                     <th>Role</th>
                                     <th>Deskripsi</th>
+                                    <th>Quota</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -66,9 +42,9 @@
                                         <td><img src="{{ asset($r->character_photo) }}" alt="{{ $r->roleName }}" width="80"></td>
                                         <td>{{ $r->roleName }}</td>
                                         <td class="text-left">{{ $r->desc }}</td>
+                                        <td>{{ $r->quota }}</td>
                                         <td>
                                             <a href="" class="btn btn-success" data-bs-toggle="modal"data-bs-target=".editRole-{{ $r->id }}"><i class="bx bx-edit"></i></a>
-                                            {{-- <a href="" class="btn btn-danger"><i class="bx bx-trash"></i></a> --}}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -117,6 +93,12 @@
                                 <label for="NIM" class="form-label">Foto Profil</label>
                                 <div class="input-group ">
                                     <input class="form-control form-control-md" type="text" name="profilepic" value="{{ $rs->profilepic }}" required>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="NIM" class="form-label">Quota</label>
+                                <div class="input-group ">
+                                    <input class="form-control form-control-md" type="quota" name="quota" value="{{ $rs->quota }}" required>
                                 </div>
                             </div>
                         </div>

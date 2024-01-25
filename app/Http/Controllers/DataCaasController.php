@@ -47,7 +47,7 @@ class DataCaasController extends Controller
             'roles_id' => 'required',
             'stages_id' => 'required',
             'isPass' => 'required',
-        ]); 
+        ]);
         $caas = Datacaas::insertGetId([
             'name' => $request->name,
             'email' => $request->email,
@@ -73,7 +73,7 @@ class DataCaasController extends Controller
         ]);
         return redirect()->route('admin.datacaas')->with('success', 'Data Caas Added');
     }
-    
+
     public function storeImport(Request $request)
     {
         $file = $request->file('data');
@@ -87,29 +87,47 @@ class DataCaasController extends Controller
             'password' => 'required',
         ]);
         $set = Datacaas::where('nim', $request->nim)->first();
-        if($set == null){
+        if ($set == null) {
             return redirect()->route('admin.datacaas')->with('error', 'NIM Tidak Terdaftar');
-        }else{
+        } else {
             $set->update([
                 'password' => Hash::make($request->password),
             ]);
-            return redirect()->route('admin.datacaas')->with('success', 'Password '. $request->nim. ' Updated');
+            return redirect()->route('admin.datacaas')->with('success', 'Password ' . $request->nim . ' Updated');
         }
     }
-    
+
     public function update(Request $request, $id)
     {
         $validate = $request->validate([
             'name' => 'required',
-            'nim' => 'required|max:16|unique:datacaas,nim,'.$id.',id',
+            'nim' => 'required|max:16|unique:datacaas,nim,' . $id . ',id',
             'major' => 'required',
             'email' => 'required',
             'class' => 'required',
             'roles_id' => 'required',
             'stages_id' => 'required',
             'isPass' => 'required',
-        ]); 
-        $tes = Datacaas::where('id', '=',$id)->update([
+        ]);
+
+        //cek kuota
+        if ($request->oldRoleId != $request->roles_id) {
+            $selected_role = Roles::where('id', '=', $request->roles_id)->first();
+            $remain = $selected_role->quota - 1;
+            if ($remain < 0) {
+                return redirect()->route('admin.datacaas')->with('error', 'Quota Tidak Cukup');
+            }
+            Roles::where('id', '=', $request->roles_id)->update([
+                'quota' => $remain,
+                'updated_at' => now(),
+            ]);
+            Roles::where('id', '=', $request->oldRoleId)->update([
+                'quota' => $request->oldRoleQuota + 1,
+                'updated_at' => now(),
+            ]);
+        }
+
+        $tes = Datacaas::where('id', '=', $id)->update([
             'name' => $request->name,
             'nim' => $request->nim,
             'major' => $request->major,
@@ -130,7 +148,7 @@ class DataCaasController extends Controller
     }
 
     public function destroy($id)
-    {   
+    {
         $caas = Datacaas::find($id);
         $caas->delete();
         return redirect()->route('admin.datacaas')->with('success', 'Data Caas Deleted');
