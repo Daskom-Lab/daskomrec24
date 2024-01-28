@@ -15,11 +15,11 @@ class CreateGrouprolesTable extends Migration
     {
         Schema::create('grouproles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
             $table->unsignedBigInteger('caas_id');
             $table->foreign('caas_id')->references('id')->on('datacaas')->onDelete('cascade');
             $table->unsignedBigInteger('roles_id');
             $table->foreign('roles_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

@@ -3,84 +3,66 @@
 namespace App\Http\Controllers;
 
 use App\Models\Shift;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreShiftRequest;
 use App\Http\Requests\UpdateShiftRequest;
 
 class ShiftController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $shifts = Shift::all()->sortBy('start_hour')->sortBy('day');
+        $data = [
+            'title' => 'Shifts',
+            'shifts' => $shifts
+        ];
+        return view('admin.shiftList', $data);
+    }
+    
+    public function create(Request $request)
+    {
+        $validate = $request->validate([
+            'shift_name' => 'required',
+            'day' => 'required',
+            'start_hour' => 'required',
+            'end_hour' => 'required',
+            'quota' => 'required',
+        ]);
+        Shift::create([
+            'shift_name' => $request->shift_name,
+            'day' => $request->day,
+            'start_hour' => $request->start_hour,
+            'end_hour' => $request->end_hour,
+            'quota' => $request->quota,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        
+        return redirect()->back()->with('status', 'Shift created successfully!');
+    }
+    public function update(Request $request, $id)
+    {
+        $validate = $request->validate([
+            'shift_name' => 'required',
+            'day' => 'required',
+            'start_hour' => 'required',
+            'end_hour' => 'required',
+            'quota' => 'required',
+        ]);
+        Shift::where('id', $id)->update([
+            'shift_name' => $request->shift_name,
+            'day' => $request->day,
+            'start_hour' => $request->start_hour,
+            'end_hour' => $request->end_hour,
+            'quota' => $request->quota,
+            'updated_at' => now(),
+        ]);
+        return redirect()->back()->with('status', 'Shift updated successfully!');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreShiftRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreShiftRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Shift  $shift
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Shift $shift)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Shift  $shift
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Shift $shift)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateShiftRequest  $request
-     * @param  \App\Models\Shift  $shift
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateShiftRequest $request, Shift $shift)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Shift  $shift
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Shift $shift)
-    {
-        //
+        Shift::where('id', $id)->delete();
+        return redirect()->back()->with('status', 'Shift deleted successfully!');
     }
 }

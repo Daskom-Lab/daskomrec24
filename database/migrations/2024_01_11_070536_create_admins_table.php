@@ -17,7 +17,7 @@ class CreateAdminsTable extends Migration
             $table->bigIncrements('id');
             $table->text('name');
             $table->string('ascod')->unique();
-            $table->string('pasword');
+            $table->string('password');
             $table->timestamps();
         });
     }

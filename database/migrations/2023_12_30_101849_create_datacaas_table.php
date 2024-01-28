@@ -16,9 +16,10 @@ class CreateDatacaasTable extends Migration
         Schema::create('datacaas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('nim')->Unique();
             $table->string('email')->unique();
-            $table->string('class'); //bakal masukin role caas (sesuai yang sudah dibuat)
+            $table->string('nim')->Unique();
+            $table->string('major');
+            $table->string('class'); 
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

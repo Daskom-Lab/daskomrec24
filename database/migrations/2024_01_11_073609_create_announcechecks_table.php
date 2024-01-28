@@ -17,6 +17,7 @@ class CreateAnnouncechecksTable extends Migration
             $table->bigIncrements('id');
             $table->tinyInteger('isMessageActive');
             $table->tinyInteger('isPlotActive');
+            $table->tinyInteger('isRoleActive');
             $table->timestamps();
         });
     }

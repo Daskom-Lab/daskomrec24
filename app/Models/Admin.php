@@ -9,12 +9,27 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Admin extends Authenticatable
 {
     use HasFactory;
+    protected $guard = 'admin';
+    protected $table = 'admins';
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
     protected $fillable = [
         'name',
         'ascod',
         'password',
+        'created_at',
+        'updated_at',
     ];
-    protected $guard = 'admins';
-    protected $table = 'admins';
-    protected $hidden = 'admins';
+
+    public function announcecheck(){
+        return Announcecheck::first();
+    }
+
+    public function stages()
+    {
+        return Stage::where('isActive', 1)->first();
+    }
 }
