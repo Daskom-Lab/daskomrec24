@@ -83,8 +83,6 @@ Route::middleware([isAdmin::class])->prefix('management')->group(function () {
         Route::get('/list-role', 'index')->name('admin.role');
         Route::post('/update-role/{id}', 'update')->name('admin.update.role');
     });
-
-
 });
 
 
@@ -105,8 +103,6 @@ Route::middleware([isCaas::class])->group(function () {
     Route::controller(CaasController::class)->group(function () {
         Route::get('/dashboard', 'index')->name('caas.dashboard');
     });
-
-
 });
 
 Route::fallback(function () {

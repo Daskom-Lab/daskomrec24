@@ -33,7 +33,7 @@ class CaasLoginController extends Controller
     }
 
 
-    public function changePass(Request $request,$id)
+    public function changePass(Request $request, $id)
     {
         $this->validate($request, [
             'password'  => 'required|min:8|string',
@@ -51,6 +51,4 @@ class CaasLoginController extends Controller
         Auth::guard('caas')->logout();
         return redirect(route('caas.login'));
     }
-
-
 }
