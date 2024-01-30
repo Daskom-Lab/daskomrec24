@@ -33,17 +33,28 @@ class CaasLoginController extends Controller
     }
 
 
-    public function changePass(Request $request, $id)
+    public function changepass(Request $request)
     {
-        $this->validate($request, [
-            'password'  => 'required|min:8|string',
-            'confirmPassword'  => 'required|same:password',
-        ]);
-        DataCaas::where('id', $id)->update([
+        $id = Auth::id();
+        $caas = Datacaas::find($id);
+        $rules = [
+            'password'    =>    'required|min:8',
+        ];
+
+        $messages = [
+            'password.required'    =>    'Password must not be blank and at least 8 characters long',
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        Datacaas::where('id', $id)->update([
+            'nama' => $caas->nama,
+            'nim' => $caas->nim,
+            'email' => $caas->email,
             'password' => Hash::make($request->password),
         ]);
-        Auth::guard('caas')->logout();
-        return redirect()->route('caas.login');
+        Auth::guard('datacaas')->logout();
+        return redirect('login')->with(['changed' => 'Password successfully changed']);
     }
 
     public function logout()
