@@ -14,6 +14,6 @@ class AssistantcontactController extends Controller
         // Mengambil semua data dari tabel assistantcontacts
         $assistantcontacts = assistantcontact::all();
 
-        return view('contact', compact('assistantcontacts'));
+        return view('assistant.contact', compact('assistantcontacts'));
     }
 }

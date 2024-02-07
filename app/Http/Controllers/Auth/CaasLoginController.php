@@ -33,27 +33,38 @@ class CaasLoginController extends Controller
     }
 
 
-    public function changepass(Request $request)
+    public function changePassword(Request $request)
     {
         $id = Auth::id();
         $caas = Datacaas::find($id);
+
+        // Validasi
         $rules = [
-            'password'    =>    'required|min:8',
+            'old_password' => 'required|password',
+            'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
         ];
 
         $messages = [
-            'password.required'    =>    'Password must not be blank and at least 8 characters long',
+            'old_password.password' => 'Old password is incorrect.',
+            'password.regex' => 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
         ];
 
         $this->validate($request, $rules, $messages);
 
-        Datacaas::where('id', $id)->update([
-            'nama' => $caas->nama,
-            'nim' => $caas->nim,
-            'email' => $caas->email,
-            'password' => Hash::make($request->password),
-        ]);
-        Auth::guard('datacaas')->logout();
+        // Verifikasi password lama
+        if (!Hash::check($request->old_password, $caas->password)) {
+            return redirect()->back()->withErrors(['old_password' => 'Old password is incorrect.']);
+        }
+
+        // Update password baru
+        $caas->password = Hash::make($request->password);
+        $caas->save();
+
+        // Logout dengan aman
+        Auth::guard('Datacaas')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect('login')->with(['changed' => 'Password successfully changed']);
     }
 
