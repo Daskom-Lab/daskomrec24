@@ -25,8 +25,9 @@ class Datacaas extends Authenticatable
         'updated_at',
     ];
 
-    public function plots(){
-        return $this->hasOne(Plotting::class,'caas_id', 'id');
+    public function plots()
+    {
+        return $this->hasOne(Plotting::class, 'caas_id', 'id');
     }
 
     public function status()
@@ -39,7 +40,8 @@ class Datacaas extends Authenticatable
         return $this->hasOne(Grouprole::class, 'caas_id', 'id');
     }
 
-    public function stages(){
+    public function stages()
+    {
         return Stage::where('is_Active', 1)->first();
     }
 
@@ -47,5 +49,4 @@ class Datacaas extends Authenticatable
     {
         return Announcecheck::first();
     }
-
 }

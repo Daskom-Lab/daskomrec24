@@ -13,6 +13,7 @@ use App\Http\Controllers\DataAdminController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\Auth\CaasLoginController;
 use App\Http\Controllers\Auth\AdminLoginController;
+use App\Models\Announcecheck;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,8 +84,6 @@ Route::middleware([isAdmin::class])->prefix('management')->group(function () {
         Route::get('/list-role', 'index')->name('admin.role');
         Route::post('/update-role/{id}', 'update')->name('admin.update.role');
     });
-
-
 });
 
 
@@ -95,7 +94,7 @@ Route::controller(CaasLoginController::class)->group(function () {
     Route::get('/loginCaas', 'loginForm')->name('caas.login')->middleware('guest:caas', 'guest:admin');
     Route::post('/loginCaas', 'loginCheck')->name('caas.login.check')->middleware('guest:caas', 'guest:admin');
 });
-// caas routes
+// caas account routes
 Route::middleware([isCaas::class])->group(function () {
 
     Route::controller(CaasLoginController::class)->group(function () {
@@ -105,9 +104,12 @@ Route::middleware([isCaas::class])->group(function () {
     Route::controller(CaasController::class)->group(function () {
         Route::get('/dashboard', 'index')->name('caas.dashboard');
     });
-
-
 });
+//change password caas
+Route::post('/PassCaas', [DatacaasController::class, 'changepass'])->name('changepass')->middleware('auth:datacaas');
+// data plots
+Route::resource('/plotting', PlottingController::class);
+
 
 Route::fallback(function () {
     return redirect('/');

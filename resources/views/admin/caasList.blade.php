@@ -32,6 +32,19 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-4 pb-0">
+                            {{-- <div class="d-flex">
+                                <form action="">
+                                    @csrf 
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <input type="text" class=" form-control" id="search" placeholder="Cari">
+                                        </div>
+                                        <div class="col-2">
+                                            <button type="submit" class="btn btn-primary"><i class="bx bx-search-alt"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div> --}}
                         </div>
                         
                         <div class="col-lg-8 align-self-end">
@@ -118,14 +131,14 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">            
-                    <div class="table-responsive">                   
-                        <table id="datatable" class="table table-striped table-bordered dt-responsive text-center nowrap w-100">
+                    <div class="table-responsive">
+                        <table id="datatable" class="table table-striped table-bordered dt-responsive  nowrap w-100">
+        
                             <thead>
                                 <tr class="">
-                                    <th>No</th>
+                                    <th class="text-center">No</th>
                                     <th>NIM</th>
                                     <th>Nama</th>
-                                    <th>Role</th>
                                     <th>Status</th>
                                     <th>Tahap</th>
                                     <th>Action</th>
@@ -135,10 +148,9 @@
                                 <?php $i=1; ?>
                                 @foreach ($caas as $c)
                                 <tr>    
-                                    <th scope="row">{{$i++}}</th>
+                                    <th scope="row" class="text-center">{{$i++}}</th>
                                     <td>{{ $c->nim }} </td>
                                     <td>{{ $c->name }}</td>
-                                    <td>{{ $c->role->roles->roleName }}</td>
                                     <td class="{{ $c->status->isPass == 1 ? 'text-success' : 'text-danger' }}">{{ $c->status->isPass == 1 ? 'LOLOS' : 'GAGAL' }}</td>
                                     <td>{{ $c->status->stages->stagesName }}</td>
                                     <td>
@@ -214,11 +226,9 @@
                         <div class="mb-3 row">
                             <label class="col-md-2 col-form-label">Role</label>
                             <div class="col-md-10">
-                                <input type="int" name="oldRoleId" value="{{$cm->role->roles_id }}" hidden>
-                                <input type="int" name="oldRoleQuota" value="{{$cm->role->roles->quota }}" hidden>
                                 <select class="form-select" name="roles_id">
                                     @foreach ( $roles as $r)
-                                    <option value="{{ $r->id }}" {{ $r->id == $cm->role->roles_id ? 'selected' : '' }}>{{ $r->roleName.' - '.$r->quota }}</option>
+                                    <option value="{{ $r->id }}" {{ $r->id == $cm->role->roles_id ? 'selected' : '' }}>{{ $r->roleName }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -272,6 +282,9 @@
                 <div class="modal-body">
                     <form>
                         @csrf
+                        {{-- <div class="mb-3 row text-center">
+                            <img src="{{ asset($cm->role->roles->profilepic) }}" alt="{{ $cm->role->roles->profilepic}}" width="30%">
+                        </div> --}}
                         <div class="mb-3 row">
                             <label for="NIM" class="col-md-2 col-form-label">NIM</label>
                             <div class="col-md-10">
@@ -343,6 +356,11 @@
                         
                     </div>
                     <div class="modal-footer">
+                    {{-- <div class="row float-end">
+                        <div class="">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Update</button>
+                        </div>
+                    </div> --}}
                     </div>
                 </form>
             </div>
@@ -399,6 +417,7 @@
                      <div class="mb-3 row">
                          <label for="NIM" class="col-md-2 col-form-label">NIM</label>
                          <div class="col-md-10">
+                             {{-- <input class="form-control" type="text" name="nim" value="{{ $c->id }}" id="id" hidden> --}}
                              <input class="form-control" type="text" name="nim" value="" id="NIM" required>
                          </div>
                      </div>
@@ -487,43 +506,43 @@
 
 
 <!-- set pass Modal -->
-<div class="modal fade setCaas-detailModal" tabindex="-1" role="dialog" aria-labelledby="setCaas-detailModal"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="setCaas-detailModal">Set CaAs</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ route('admin.set.caas') }}" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                    <label class="form-label">NIM</label>
-                    <div class="input-group auth-pass-inputgroup">
-                        <input type="text" name="nim" class="form-control" placeholder="Enter NIM" aria-label="NIM">
+ <div class="modal fade setCaas-detailModal" tabindex="-1" role="dialog" aria-labelledby="setCaas-detailModal"
+     aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered" role="document">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title" id="setCaas-detailModal">Set CaAs</h5>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+                 <form action="{{ route('admin.set.caas') }}" method="POST">
+                     @csrf
+                     <div class="mb-3">
+                        <label class="form-label">NIM</label>
+                        <div class="input-group auth-pass-inputgroup">
+                            <input type="text" name="nim" class="form-control" placeholder="Enter NIM" aria-label="NIM">
+                        </div>
                     </div>
-                </div>
-                    <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <div class="input-group auth-pass-inputgroup">
-                        <input type="password" name="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
-                        <button class="btn btn-light " type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
+                     <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <div class="input-group auth-pass-inputgroup">
+                            <input type="password" name="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
+                            <button class="btn btn-light " type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
+                        </div>
                     </div>
-                </div>
-                </div>
-                <div class="modal-footer">
-                <div class="row float-end">
-                    <div class="">
-                        <button type="submit" class="btn btn-secondary">Save</button>
-                    </div>
-                </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- end modal -->
+                 </div>
+                 <div class="modal-footer">
+                 <div class="row float-end">
+                     <div class="">
+                         <button type="submit" class="btn btn-secondary">Save</button>
+                     </div>
+                 </div>
+                 </div>
+             </form>
+         </div>
+     </div>
+ </div>
+ <!-- end modal -->
 
 <!-- import excel Modal -->
  <div class="modal fade importCaas-detailModal" tabindex="-1" role="dialog" aria-labelledby="importCaas-detailModal"
@@ -537,23 +556,9 @@
              <div class="modal-body">
                  <form action="{{ route('admin.import.caas') }}" method="POST" enctype="multipart/form-data">
                      @csrf
-                     <div class="mb-3 mx-2 row">
-                         <label for="NIM" class="col-md-3 col-form-label">Format Data:</label>
-                         <p>dimulai dari A1, tanpa nama kolom</p>
-                         <table class="table table-bordered bg-soft bg-secondary" style>
-                             <tr>
-                                <td>NIM</td>
-                                <td>Nama</td>
-                                <td>Email</td>
-                                <td>Jurusan</td>
-                                <td>Kelas</td>
-                             </tr>
-                         </table>
-                     </div>
-                     <hr>
-                     <div class="mb-3 mx-2 row">
-                         <label for="NIM" class="input-group form-label">Choose File: </label>
-                         <div class="col-12">
+                     <div class="mb-3 row">
+                         <label for="NIM" class="col-md-3 col-form-label">Choose File</label>
+                         <div class="col-md-9">
                              <input class="form-control form-control-md" type="file" accept=".xlsx, .xls, .csv" name="data" required>
                          </div>
                      </div>

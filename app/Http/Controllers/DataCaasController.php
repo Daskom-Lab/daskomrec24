@@ -73,7 +73,6 @@ class DataCaasController extends Controller
         ]);
         return redirect()->route('admin.datacaas')->with('success', 'Data Caas Added');
     }
-
     public function storeImport(Request $request)
     {
         $file = $request->file('data');
