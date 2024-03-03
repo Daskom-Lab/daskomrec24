@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class CaasLoginController extends Controller
 {
+    public function landing()
+    {
+        return view('caas.landing');
+    }
+
     public function loginForm()
     {
         return view('caas.auth.login');
@@ -32,23 +37,25 @@ class CaasLoginController extends Controller
         return redirect()->back()->with(['error' => 'NIM / Password Salah']); // disesuaikan sama nama routenye
     }
 
-
-    public function changePassword(Request $request)
+    public function changePass()
     {
-        $id = Auth::id();
+        return view('caas.changepass', ['title' => 'Change Password']);
+    }
+
+    public function changePassCheck(Request $request)
+    {
+        $id = Auth::guard('caas')->user()->id;
         $caas = Datacaas::find($id);
 
         // Validasi
-        $rules = [
-            'old_password' => 'required|password',
-            'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
-        ];
-
         $messages = [
-            'old_password.password' => 'Old password is incorrect.',
-            'password.regex' => 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+            'old_password' => 'Old password is incorrect.',
+            'password' => 'Minimal 8 karakter dan maksimal 12 karakter.',
         ];
-
+        $rules = [
+            'old_password' => 'required|string',
+            'password' => 'required|string|min:8|max:12',
+        ];
         $this->validate($request, $rules, $messages);
 
         // Verifikasi password lama
@@ -61,11 +68,11 @@ class CaasLoginController extends Controller
         $caas->save();
 
         // Logout dengan aman
-        Auth::guard('Datacaas')->logout();
+        Auth::guard('caas')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('login')->with(['changed' => 'Password successfully changed']);
+        return redirect('/')->with(['changed' => 'Password successfully changed']);
     }
 
     public function logout()
