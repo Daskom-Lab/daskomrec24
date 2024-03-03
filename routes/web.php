@@ -27,7 +27,7 @@ use App\Models\Announcecheck;
 */
 
 Route::get('/', function () {
-    return redirect()->route('caas.login');
+    return redirect()->route('caas.landing');
 })->middleware('guest:caas', 'guest:admin');
 
 //admin login
@@ -91,6 +91,7 @@ Route::middleware([isAdmin::class])->prefix('management')->group(function () {
 
 //caas login
 Route::controller(CaasLoginController::class)->group(function () {
+    Route::get('/', 'landing')->name('caas.landing')->middleware('guest:caas', 'guest:admin');
     Route::get('/loginCaas', 'loginForm')->name('caas.login')->middleware('guest:caas', 'guest:admin');
     Route::post('/loginCaas', 'loginCheck')->name('caas.login.check')->middleware('guest:caas', 'guest:admin');
 });
@@ -99,17 +100,28 @@ Route::middleware([isCaas::class])->group(function () {
 
     Route::controller(CaasLoginController::class)->group(function () {
         Route::get('/logout', 'logout')->name('caas.logout');
+        Route::get('/change-password', 'changePass')->name('caas.changepass');
+        Route::post('/save-password', 'changePassCheck')->name('caas.changepass.check');
     });
+
 
     Route::controller(CaasController::class)->group(function () {
         Route::get('/dashboard', 'index')->name('caas.dashboard');
+
+        Route::get('/announcement', 'announcement')->name('caas.announcement');
+        Route::get('/the-assistant', 'assistant')->name('caas.assistant.contact');
+
+        Route::get('/list-schedule', 'viewSchedule')->name('caas.schedule');
+        Route::post('/confirm-schedule', 'selectSchedule')->name('caas.select.schedule');
+        Route::post('/save-schedule', 'saveSchedule')->name('caas.save.schedule');
+        Route::get('/fix-schedule', 'fixSchedule')->name('caas.fix.schedule');
+
+        Route::get('/list-role', 'viewRole')->name('caas.role');
+        Route::post('/confirm-role', 'selectRole')->name('caas.select.role');
+        Route::post('/save-role', 'saveRole')->name('caas.save.role');
+        Route::get('/fix-role', 'fixRole')->name('caas.fix.role');
     });
 });
-//change password caas
-Route::post('/PassCaas', [DatacaasController::class, 'changepass'])->name('changepass')->middleware('auth:datacaas');
-// data plots
-Route::resource('/plotting', PlottingController::class);
-
 
 Route::fallback(function () {
     return redirect('/');
