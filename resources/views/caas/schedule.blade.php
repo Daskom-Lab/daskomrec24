@@ -34,10 +34,9 @@
                     </tr>
                 </thead>
                 <tbody class="bg-light text-fivedary text-[10px] lg:text-[13px] table-auto">
-                    <?php $i=1;?>
                     @foreach ($schedule as $s)
                     <tr>
-                        <th class="border border-butter px-2 lg:px-4 py-2">{{ $i }}</th>
+                        <th class="border border-butter px-2 lg:px-4 py-2">{{ $loop->iteration }}</th>
                         <th class="border border-butter px-2 lg:px-4 py-2">{{ $s->shift_name }}</th>
                         <th class="border border-butter px-2 lg:px-4 py-2">{{ $s->day }}</th>
                         <th class="border border-butter px-2 lg:px-4 py-2">{{ substr($s->start_hour,0,-3)}} - {{ substr($s->end_hour,0,-3) }}</th>
@@ -58,7 +57,6 @@
                             @endif
                         </th>
                     </tr>
-                    <?php $i++;?>
                     @endforeach
                     
                 </tbody>
