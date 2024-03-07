@@ -1,0 +1,430 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: "Ringbearer";
+    src: url("/assets/caas/font/RINGM___.TTF");
+}
+
+@font-face {
+    font-family: "Enchanted";
+    src: url("/assets/caas/font/Enchanted Land.otf");
+}
+
+@font-face {
+    font-family: "Vinque";
+    src: url("/assets/caas/font/vinque.ttf");
+}
+
+@font-face {
+    font-family: "Blackcha";
+    src: url("/assets/caas/font/BLKCHCRY.TTF");
+}
+
+
+@layer utilities {
+
+    /* Slick position */
+    .slickprev {
+        left: 50px;
+        z-index: 9;
+    }
+
+    .slicknext {
+        right: 75px;
+        z-index: 9;
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    /* Custom images for assistant contact slides and CAAS roles */
+    .custom-carousel .owl-item.center img {
+        @apply transform scale-110 opacity-100;
+    }
+
+    .custom-carousel .owl-item img {
+        @apply h-full w-full bg-contain;
+    }
+
+    .custom-card .owl-item.center img {
+        @apply transform scale-110 opacity-100;
+    }
+
+    .custom-card .owl-item img {
+        @apply h-full max-w-full bg-contain;
+    }
+}
+
+/* Customize the position of the quota text */
+/* .text-end {
+  justify-contain: flex-end;
+} */
+
+.text-quota {
+    top: 195px;
+    right: 40px;
+}
+
+/* Customize quota text position at multiple sizes */
+@media (max-width: 768px) {
+    .text-quota {
+        top: 265px;
+        right: 55px;
+    }
+}
+
+@media (max-width: 450px) {
+    .text-quota {
+        top: 320px;
+        right: 65px;
+    }
+}
+
+@media (max-width: 425px) {
+    .text-quota {
+        top: 290px;
+    }
+}
+
+@media (max-width: 400px) {
+    .text-quota {
+        top: 280px;
+    }
+}
+
+/* @media (max-width: 375px){
+  .gambar-role{
+    width: 290px;
+    margin-bottom: 60px;
+  }
+}  */
+
+@media (max-width: 350px) {
+    .text-quota {
+        top: 240px;
+        right: 50px;
+    }
+
+    .deks-dlor {
+        font-size: 12px;
+
+    }
+
+    .deks-dlor-botom {
+        font-size: 15px;
+    }
+
+    .icon-dlor24 {
+        height: 40px;
+    }
+}
+
+@media (max-width: 320px) {
+    .text-quota {
+        top: 215px;
+        right: 50px;
+    }
+}
+
+/* Custom slick button position */
+.mcard {
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+@media (max-width: 768px) {
+    .mcard {
+        margin-bottom: 60px;
+    }
+}
+
+/* Removed owl-dots on Assistant contact image slides and Caas roles */
+.custom-carousel .owl-dots {
+    display: none;
+}
+
+.custom-card .owl-dots {
+    display: none;
+}
+
+/* Added image slide transitions for Assistant contacts and Caas roles */
+.owl-item.active.center img,
+.owl-item.active.center .choose-role {
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.owl-item.active.center img {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.owl-item.active.center .choose-role {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.owl-item.active img,
+.owl-item.active .choose-role {
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.owl-item.active img {
+    transform: scale(0.9);
+    opacity: 1;
+}
+
+.owl-item.active .choose-role {
+    transform: translateY(200px) scale(0.9);
+    opacity: 1;
+}
+
+.owl-item img,
+.owl-item .choose-role {
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.owl-item img {
+    transform: scale(0.9);
+    opacity: 1;
+}
+
+.owl-item .choose-role {
+    transform: translateY(200px) scale(0.9);
+    opacity: 0;
+}
+
+/* Set everything to slick */
+.slick-prev:before,
+.slick-next:before {
+    color: white;
+    font-size: 30px;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+    opacity: 1;
+}
+
+.slick-prev {
+    left: -50px;
+}
+
+.slick-next {
+    right: -50px;
+}
+
+.owl-item>div:after {
+    @apply absolute inset-0 flex items-center justify-center text-5xl font-bold text-white;
+}
+
+/* Sidebar */
+
+.sidebar.open {
+    width: 250px;
+}
+
+/* CSS */
+/* Untuk layar small-L (sm) */
+@media (max-width: 425px) {
+    .sidebar.open {
+        width: 155px;
+    }
+
+    .image-caas {
+        padding-top: 8px;
+    }
+
+    .deskripsi {
+        margin-top: 10px;
+    }
+
+    /* halaman announcement */
+    .paper {
+        width: 330px;
+        height: 570px;
+        padding-top: 40px;
+    }
+
+    .text-announce {
+        margin-top: 142px;
+    }
+
+    .announcement {
+        text-align: justify;
+    }
+
+    .button-schedule {
+        margin-top: 170px;
+    }
+
+    /* halaman fix role cass */
+    .role {
+        height: 320px;
+        justify-content: center;
+    }
+
+    /* warning change pass, logout */
+    .warning {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .text-warning {
+        margin-top: 3px;
+        margin-bottom: 18px;
+    }
+
+    .text-wardeks {
+        font-size: 16px;
+    }
+
+    .box-button-warning {
+        margin-top: 8px;
+        max-width: 150px;
+    }
+
+    .button-warning {
+        padding-left: 18px;
+        padding-right: 18px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-top: 1rem;
+    }
+
+    /* halaman pilih shcedule */
+    .judul-tabel {
+        font-size: 20px;
+    }
+
+    /* warning fix jadwal caas */
+    .warning-jadwal {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .text-warning-jadwal {
+        margin-top: 3px;
+        margin-bottom: 18px;
+    }
+
+    .text-deksjad {
+        margin-top: 22px;
+    }
+
+    .box-button-warning-jadwal {
+        max-width: 170px;
+        margin-top: 3px;
+    }
+
+    .box-button-warjad {
+        padding-left: 18px;
+        padding-right: 18px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-top: 1rem;
+    }
+
+    /* halaman fix schedule */
+    .text-fix-schedule {
+        padding-top: 30px;
+        padding-bottom: 20px;
+    }
+
+    .text-fix-secjad {
+        margin-bottom: 25px;
+    }
+
+    .text-fix-trijad {
+        font-size: 33px;
+    }
+}
+
+/* Untuk layar small (sm) */
+@media (max-width: 640px) {
+    .sidebar.open {
+        width: 255px;
+    }
+}
+
+/* Untuk layar medium (md) */
+@media (max-width: 768px) {
+    .sidebar.open {
+        width: 285px;
+    }
+
+    .deskripsi {
+        margin-top: 360px;
+    }
+}
+
+/* Untuk layar besar (lg) */
+@media (max-width: 1024px) {
+    .deskripsi {
+        margin-top: 380px;
+    }
+}
+
+/* Untuk layar besar (xl) */
+@media (max-width: 1440px) {
+    .deskripsi {
+        margin-top: 380px;
+    }
+}
+
+/* untuk layar besar (@4K) */
+@media (max-width: 2560px) {
+    .deskripsi {
+        margin-top: 380px;
+    }
+}
+
+.prof li a span {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.prof.open li a span {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.boxsidebar h1 {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.boxsidebar.open h1 {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.boxsidebar {
+    opacity: 0;
+    pointer-events: auto;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.boxsidebar.open {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 1s ease-in-out;
+}
