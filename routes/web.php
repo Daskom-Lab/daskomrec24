@@ -13,7 +13,6 @@ use App\Http\Controllers\DataAdminController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\Auth\CaasLoginController;
 use App\Http\Controllers\Auth\AdminLoginController;
-use App\Models\Announcecheck;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,15 +110,15 @@ Route::middleware([isCaas::class])->group(function () {
         Route::get('/announcement', 'announcement')->name('caas.announcement');
         Route::get('/the-assistant', 'assistant')->name('caas.assistant.contact');
 
-        Route::get('/list-schedule', 'viewSchedule')->name('caas.schedule');
+        Route::get('/list-schedule', 'viewSchedule')->name('caas.schedule')->middleware('schedule.validation');
         Route::post('/confirm-schedule', 'selectSchedule')->name('caas.select.schedule');
         Route::post('/save-schedule', 'saveSchedule')->name('caas.save.schedule');
-        Route::get('/fix-schedule', 'fixSchedule')->name('caas.fix.schedule');
+        Route::get('/fix-schedule', 'fixSchedule')->name('caas.fix.schedule')->middleware('schedule.validation');
 
-        Route::get('/list-role', 'viewRole')->name('caas.role');
+        Route::get('/list-role', 'viewRole')->name('caas.role')->middleware('role.validation');
         Route::post('/confirm-role', 'selectRole')->name('caas.select.role');
         Route::post('/save-role', 'saveRole')->name('caas.save.role');
-        Route::get('/fix-role', 'fixRole')->name('caas.fix.role');
+        Route::get('/fix-role', 'fixRole')->name('caas.fix.role')->middleware('role.validation');
     });
 });
 

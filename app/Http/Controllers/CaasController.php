@@ -10,7 +10,6 @@ use App\Models\Message;
 use App\Models\Plotting;
 use App\Models\Roles;
 use App\Models\Shift;
-use App\Models\Status;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,11 +48,6 @@ class CaasController extends Controller
     //Schedule functions
     public function viewSchedule()
     {
-        if (Auth::guard('caas')->user()->status->isPass == 0 || Auth::guard('caas')->user()->announcecheck()->isPlotActive == 0) {
-            return redirect()->route('caas.dashboard');
-        } elseif (boolval(Auth::guard('caas')->user()->plots) == 1) {
-            return redirect()->route('caas.fix.schedule');
-        }
         $shifts = Shift::orderBy('day', 'asc')->orderBy('start_hour', 'asc')->paginate(5);
         $data = [
             'title' => "Daftar Jadwal",
@@ -67,7 +61,7 @@ class CaasController extends Controller
         $shift = Shift::where('id', $request->id)->first();
         $day = Carbon::parse($shift->day)->locale('id')->translatedFormat('l d M');
         //kalo ada yg iseng masuk lewat link
-        if ($shift->quota <= 0 || Auth::guard('caas')->user()->announcecheck()->isPlotActive == 0) {
+        if ($shift->quota <= 0 || !Auth::guard('caas')->user()->announcecheck()->isPlotActive) {
             return redirect()->route('caas.schedule');
         }
         $data = [
@@ -95,10 +89,6 @@ class CaasController extends Controller
     }
     public function fixSchedule()
     {
-        // dd(boolval(Auth::guard('caas')->user()->plots));
-        if (boolval(Auth::guard('caas')->user()->plots) == 0) {
-            return redirect()->route('caas.schedule');
-        }
         $sday = Auth::guard('caas')->user()->plots->shifts->day;
         $stime = Auth::guard('caas')->user()->plots->shifts->start_hour;
         $etime = Auth::guard('caas')->user()->plots->shifts->end_hour;
@@ -118,10 +108,6 @@ class CaasController extends Controller
     //Role functions
     public function viewRole()
     {
-        //just validasi kalo ada yg iseng
-        if (Auth::guard('caas')->user()->status->isPass == 0 || Auth::guard('caas')->user()->role->roles_id != 1 || Auth::guard('caas')->user()->announcecheck()->isRoleActive == 0) {
-            return redirect()->route('caas.fix.role');
-        }
         $roles = Roles::all()->except(1);
         $data = [
             'title' => "Pilih Role",
@@ -159,9 +145,6 @@ class CaasController extends Controller
 
     public function fixRole()
     {
-        if (Auth::guard('caas')->user()->role->roles_id == 1 || Auth::guard('caas')->user()->status->isPass == 0 || Auth::guard('caas')->user()->status->stages->stagesName != "Upgrading") {
-            return redirect()->route('caas.dashboard');
-        }
         $data = [
             'title' => "Role Kamu",
         ];
