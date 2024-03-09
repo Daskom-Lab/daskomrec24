@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\DataCaas;
+use App\Models\Datacaas;
 use App\Models\Grouprole;
 use App\Models\Status;
 use Illuminate\Support\Collection;
