@@ -34,7 +34,7 @@ class CaasLoginController extends Controller
         ], true)) {
             return redirect()->route('caas.dashboard'); // disesuaikan sama nama route
         }
-        return redirect()->back()->with(['error' => 'NIM / Password Salah']); // disesuaikan sama nama routenye
+        return redirect()->back()->withErrors(['nim' => 'NIM atau Password Salah', 'password' => 'NIM atau Password Salah']); // disesuaikan sama nama routenye        
     }
 
     public function changePass()
