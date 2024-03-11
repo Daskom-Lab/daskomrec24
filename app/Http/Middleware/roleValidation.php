@@ -24,7 +24,13 @@ class roleValidation
             }elseif($page == 'caas.fix.role' && auth()->guard('caas')->user()->role->roles_id == 1){
                 return redirect()->route('caas.role');
             }
-        }else{
+        }
+        elseif(auth()->guard('caas')->user()->status->isPass && auth()->guard('caas')->user()->status->stages->stagesName == "Upgrading" && !auth()->guard('caas')->user()->announcecheck()->isRoleActive){
+            if($page == 'caas.role' && auth()->guard('caas')->user()->role->roles_id > 1){
+                return redirect()->route('caas.fix.role');
+            }
+        }
+        else{
             return redirect()->route('caas.dashboard');
         }
         return $next($request);
