@@ -29,16 +29,16 @@
             {!! $msg->pass_msg !!}
         </p>       
         @elseif (auth()->guard('caas')->user()->status->isPass == 0)
-        <p class="announcement text-secondary text-[12px] text-justify max-w-[200px] mx-auto font-vinque">
+        <p class="announcement text-secondary text-[12px] text-justify max-w-[250px] mx-auto font-vinque">
             {!! $msg->failed_msg !!}
         </p>
         @elseif (auth()->guard('caas')->user()->announcecheck()->isMessageActive == 0 && auth()->guard('caas')->user()->status->isPass == 1)
-         <p class="announcement text-secondary text-[12px] text-center max-w-[200px] mx-auto font-vinque">
-            Tahap {{ auth()->guard('caas')->user()->status->stages->stagesName }} sedang berlangsung. Cek lagi jika OA DLOR 2024 sudah memberi notifikasi.
+         <p class="announcement text-secondary text-[12px] text-center max-w-[250px] mx-auto font-vinque">
+            <span class="text-[#4322fb] ">Tahap {{ auth()->guard('caas')->user()->status->stages->stagesName }}</span> sedang berlangsung.<br> Semangat dan pantau terus informasi di OA Line Recruitment Daskom Laboratory untuk instruksi berikutnya.
         </p>
         @endif
 
-        @if (auth()->guard('caas')->user()->announcecheck()->isPlotActive == 1 && auth()->guard('caas')->user()->status->isPass == 1)
+        @if (auth()->guard('caas')->user()->announcecheck()->isPlotActive == 1 && auth()->guard('caas')->user()->status->isPass == 1 && !boolval(auth()->guard('caas')->user()->plots))
         <a href="{{ route('caas.schedule') }}">
             <button class="button-schedule mt-[130px] mb-0 text-secondary font-semibold font-ringbearer text-[12px] bg-coklat-muda px-4 py-2 shadow-secondary shadow-xl hover:text-coklat-terang hover:bg-primary">
                 Pilih Jadwal
